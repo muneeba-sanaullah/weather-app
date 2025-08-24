@@ -13,15 +13,14 @@ function Weather() {
       return;
     }
     try {
-      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
+      const url = `/.netlify/functions/weather?city=${city}`;
       const response = await fetch(url);
       const data = await response.json();
 
       if (!response.ok) {
         alert("City not found!");
+        return;
       }
-
-      console.log(data);
 
       setWeatherData({
         humidity: data.main.humidity,
@@ -36,9 +35,17 @@ function Weather() {
     }
   };
 
+  // Default city on load
   useEffect(() => {
     search("Los Angeles");
   }, []);
+
+  // Handle Enter key
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      search(inputRef.current.value);
+    }
+  };
 
   return (
     <div className="weather">
@@ -47,26 +54,28 @@ function Weather() {
           type="text"
           ref={inputRef}
           placeholder="Search"
-          onKeyDown={(e) => {
-            if (e.key === "Enter") {
-              search(inputRef.current.value);
-            }
-          }}
+          onKeyDown={handleKeyDown}
         />
         <button onClick={() => search(inputRef.current.value)}>
           <FontAwesomeIcon icon={faSearch} />
         </button>
       </div>
+
       {weatherData ? (
         <>
-          <img src={weatherData.icon} alt="weather icon" className="sun-icon" />
+          <img
+            src={weatherData.icon}
+            alt="weather icon"
+            className="sun-icon"
+          />
           <p className="temp">{weatherData.temperature}°C</p>
           <p className="location">{weatherData.location}</p>
+
           <div className="weather-data">
             <div className="col">
               <img
                 src="https://uxwing.com/wp-content/themes/uxwing/download/weather/drop-white-icon.svg"
-                alt=""
+                alt="humidity icon"
               />
               <div>
                 <p>{weatherData.humidity}%</p>
@@ -77,7 +86,7 @@ function Weather() {
             <div className="col">
               <img
                 src="https://icons.veryicon.com/png/o/weather/color-weather/wind-6.png"
-                alt=""
+                alt="wind icon"
               />
               <div>
                 <p>{weatherData.windSpeed}Km/h</p>

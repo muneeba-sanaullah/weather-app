@@ -13,14 +13,12 @@ function Weather() {
       return;
     }
     try {
-      // ✅ Call Netlify function instead of OpenWeather API directly
-      const url = `/.netlify/functions/weather?city=${city}`;
+      const url = `https://api.openweathermap.org/data/2.5/weather?q=${city}&units=metric&appid=${import.meta.env.VITE_APP_ID}`;
       const response = await fetch(url);
       const data = await response.json();
 
       if (!response.ok) {
         alert("City not found!");
-        return;
       }
 
       console.log(data);
@@ -45,7 +43,16 @@ function Weather() {
   return (
     <div className="weather">
       <div className="search-bar">
-        <input type="text" ref={inputRef} placeholder="Search" />
+        <input
+          type="text"
+          ref={inputRef}
+          placeholder="Search"
+          onKeyDown={(e) => {
+            if (e.key === "Enter") {
+              search(inputRef.current.value);
+            }
+          }}
+        />
         <button onClick={() => search(inputRef.current.value)}>
           <FontAwesomeIcon icon={faSearch} />
         </button>

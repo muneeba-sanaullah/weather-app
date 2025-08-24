@@ -1,40 +1,62 @@
 .weather {
     place-self: center;
     padding: 40px;
-    border-radius: 10px;
+    border-radius: 15px;
     background: linear-gradient(135deg, #46E1B4, #434B6B);
     display: flex;
     flex-direction: column;
     align-items: center;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.2);
+    transition: transform 0.2s ease-in-out;
+}
+
+.weather:hover {
+    transform: translateY(-5px);
 }
 
 .search-bar {
     display: flex;
     align-items: center;
     gap: 12px;
+    margin-bottom: 20px;
+    width: 100%;
+    max-width: 400px;
 }
 
 .search-bar input {
+    flex: 1;
     height: 50px;
     border: none;
     outline: none;
     border-radius: 40px;
-    padding-left: 25px;
-    font-style: 18px;
+    padding-left: 20px;
+    font-size: 18px;
 }
 
 .search-bar button {
     width: 50px;
-    padding: 15px;
+    height: 50px;
     border-radius: 50%;
     border: none;
     cursor: pointer;
+    background: white;
+    color: #434B6B;
+    font-size: 18px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: background 0.3s, transform 0.2s;
+}
+
+.search-bar button:hover {
+    background: #eee;
+    transform: scale(1.05);
 }
 
 .sun-icon {
     height: 100px;
-    width: 150px;
-    margin: 30px 0;
+    width: 100px;
+    margin: 25px 0;
     object-fit: cover;
 }
 
@@ -42,35 +64,73 @@
     color: white;
     font-size: 60px;
     line-height: 1;
+    margin: 10px 0;
 }
 
 .location {
     color: white;
-    font-size: 30px;
+    font-size: 28px;
+    margin-bottom: 20px;
 }
 
 .weather-data {
     width: 100%;
-    margin-top: 40px;
+    margin-top: 20px;
     color: white;
     display: flex;
     justify-content: space-between;
-    gap: 35px;
+    gap: 25px;
 }
 
 .weather-data .col {
     display: flex;
-    align-items: flex-start;
-    gap: 12px;
-    font-size: 22px;
+    align-items: center;
+    gap: 10px;
+    font-size: 20px;
 }
- 
+
 .weather-data .col span {
     display: block;
-    font-size: 16px;
+    font-size: 14px;
 }
 
 .weather-data .col img {
-    width: 30px;
-    margin-top: 10px;
+    width: 28px;
+    margin-top: 5px;
+}
+
+/* 📱 Mobile responsiveness */
+@media (max-width: 500px) {
+    .weather {
+        padding: 25px 15px;
+        max-width: 95%;
+    }
+
+    .temp {
+        font-size: 42px;
+    }
+
+    .location {
+        font-size: 20px;
+    }
+
+    .weather-data {
+        flex-direction: column;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .search-bar {
+        flex-direction: row;
+        width: 100%;
+    }
+
+    .search-bar input {
+        font-size: 16px;
+    }
+
+    .search-bar button {
+        width: 45px;
+        height: 45px;
+    }
 }
